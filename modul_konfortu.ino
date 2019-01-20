@@ -34,6 +34,7 @@ float kierownica_volt =.0;
 float fotorezystor_volt = .0;
 float mglowe_volt = .0; 
 bool light_L = false, light_R = false;
+float foto[10];
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
@@ -48,7 +49,8 @@ void setup() {
   pinMode(PIN_HOME_ARRIVAL,OUTPUT);
   pinMode(PIN_Swiatla_MIJANIA,INPUT);
   pinMode(PIN_fotorezystor,INPUT);
-}
+  for(int i=0;i<10;i++)foto[i] = .0;
+  }
 
 void loop() {
   // put your main code here, to run repeatedly:
@@ -81,7 +83,26 @@ void loop() {
     {
       analogWrite(PIN_DRL,i);
       delay(15);  
-    }  
+    }
+    if(light_R)
+      {
+        light_R = false;
+        for(int i=255;i>=0;i--)
+        {
+          analogWrite(PIN_light_R,i);
+          delay(2);
+        }  
+      }
+      if(light_L)
+      {
+        light_L = false;
+        
+        for(int i=255;i>=0;i--)
+        {
+          analogWrite(PIN_light_L,i);
+          delay(2);
+        }  
+      }  
   } else if( vin < 13 ){
     //wylacza
    if(swiatla_mijania_zapalone || swiatla_volt > 8 ){
@@ -144,6 +165,25 @@ void loop() {
         analogWrite(PIN_DRL,i);
         delay(15);  
       }
+      if(light_R)
+      {
+        light_R = false;
+        for(int i=255;i>=0;i--)
+        {
+          analogWrite(PIN_light_R,i);
+          delay(2);
+        }  
+      }
+      if(light_L)
+      {
+        light_L = false;
+        
+        for(int i=255;i>=0;i--)
+        {
+          analogWrite(PIN_light_L,i);
+          delay(2);
+        }  
+      }  
       }    
   }
 
@@ -261,6 +301,10 @@ void loop() {
   }
 }
 
+bool zmierzch()
+{
+    
+}
 
 bool kluczyk_zadzialal(float kluczyk)
 {
